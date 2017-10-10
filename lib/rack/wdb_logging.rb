@@ -4,6 +4,7 @@ require 'rack/wdb_logging/activity'
 require 'rack/wdb_logging/configuration'
 require 'rack/wdb_logging/hash_flattener'
 require 'fluent-logger'
+require 'rack/wdb_logging/railtie' if defined?(Rails::Railtie)
 
 module Rack
   class WdbLogging

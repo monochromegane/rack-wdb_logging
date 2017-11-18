@@ -1,8 +1,12 @@
 # Rack::WdbLogging
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rack/wdb_logging`. To experiment with that code, run `bin/console` for an interactive prompt.
+Rack::WdbLogging collects all activities on rack middleware.
 
-TODO: Delete this and the text above, and describe your gem
+このリポジトリは技術評論社刊「WEB+DB PRESS Vol.102」の連載「実践！ 先進的インフラ運用」第4回「サービス改善につながるログ活用基盤の構築」のRackミドルウェアに関する参考実装です。
+
+This is a reference implementation of Rack middleware introduced in "WEB+DB PRESS Vol. 102" series "Advanced infrastructure operation" 4th.
+
+http://gihyo.jp/magazine/wdpress/archive/2017/vol102
 
 ## Installation
 
@@ -22,7 +26,46 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First, setup td-agent in your server.
+
+```
+# Input
+<source>
+  @type forward
+</source>
+
+# Output
+<match wdb_development.**>
+  @type tdlog
+  apikey YOUR_API_KEY
+  auto_create_table
+  buffer_type file
+  buffer_path /var/log/td-agent/buffer/td
+  use_ssl true
+</match>
+```
+
+Then, prepare a configuration file the following:
+
+`config/initializers/rack-wdb_logging.rb`
+
+```rb
+Rails.application.config.app_middleware.insert_after ActionDispatch::Callbacks, Rack::WdbLogging do |config|
+  config.db_name       = 'wdb'
+  config.environment   = Rails.env
+  config.fluent_host   = '127.0.0.1'
+  config.enable_fluent = true # or Rails.env.production?
+end
+```
+
+Then, access your Rails application.
+
+
+If you need application layer information, you can call `set_activity` in your controller.
+
+```rb
+set_activity(:account_id, current_user.id)
+```
 
 ## Development
 

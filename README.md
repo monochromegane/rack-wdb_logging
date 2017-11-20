@@ -6,7 +6,7 @@ Rack::WdbLogging collects all activities on rack middleware.
 
 This is a reference implementation of Rack middleware introduced in "WEB+DB PRESS Vol. 102" series "Advanced infrastructure operation" 4th.
 
-http://gihyo.jp/magazine/wdpress/archive/2017/vol102
+http://gihyo.jp/magazine/wdpress/archive/2018/vol102
 
 ## Installation
 

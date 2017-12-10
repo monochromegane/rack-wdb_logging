@@ -1,4 +1,4 @@
-# Rack::WdbLogging
+# Rack::WdbLogging [![Build Status](https://travis-ci.org/monochromegane/rack-wdb_logging.svg?branch=master)](https://travis-ci.org/monochromegane/rack-wdb_logging)
 
 Rack::WdbLogging collects all activities on rack middleware.
 
